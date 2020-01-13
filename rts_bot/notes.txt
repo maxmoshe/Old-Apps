@@ -1,0 +1,116 @@
+
+
+'''
+
+----------------------------------------------------------------------------------------
+IMPORTANT: MAKE PORTAL POSTISTIONS RELATIVE - GETMYCASTLE.TOWARDS AND SUCH.
+IF BOTH ELVES ARE WAITING FOR MANA MAKE ONE CHANGE ACTION TO NONE MANA ONE.
+make scores depend on spells on the elf.
+MAKE KITE USE EFFECTIVE TROLL HP, WITH HP WHEN TROLL GETS TO THE ELF
+for all scores do min(1, score)
+
+
+More:
+1. Send attackers once in a while to force defensiveness
+2. Build attack portal squad - with a portal to defend the attack portal or replace it.
+
+Ideas with Koby:
+1. Make elves keep distance until lava giants are aggroed
+2. IF distance from buildPortalLocation is small, prioratize building
+4. Build semi-attack portal
+
+DORHAMORDORHAMOR
+
+print random nums to confuse enemy
+
+make getAverageGiantLocation depend on the health of the giants
+we can use game_object.id to find the id of an object.
+
+
+
+if enemy elves are hunting our elves:
+    kite them to our portal to get smashed.
+        
+
+GENERAL PORTAL STRATEGY:
+    make a function that chooses the portal location depending on the game state - could check if we have portals
+    -near a certain area, and if we dont check if game.can_build_portal_at() that space or spaces around it.
+    
+    we could run it before all other things so that it gets priority, and make the closest elf to the location
+    go and build it.
+    
+
+
+'''
+
+
+'''
+Create building_strategies.py, elf_strategies.py
+
+Make strategies functions - and try switching them up.
+For example:
+
+def defend_strategy(game, elf):
+    if (elf.health > 50):
+        run_away()
+    else:
+        defend_portal()
+        
+elf_1_strategy = defend_strategy
+
+elf_1_strategy(game, elf)
+
+
+
+
+
+old code:
+
+def getPortalLocations(game):
+    side = getSideOfMap(game)
+    leftDefensePortalLoc = Location(2996,1584)
+    centerPortalLocation = getCenterPortalLocation(game)
+    rightDefensePortalLoc = Location(950,5000)
+    locArr = []
+    
+    if side == 'left':
+        defensePortal = Location(2996,1584) #leftDefensePortalLoc
+        attackPortal = Location(300,4000)  #300,5107
+    else: #if side == right
+        defensePortal = Location(950,5000) #rightDefensePortalLoc
+        attackPortal = Location(3501, 2500) #3501, 1393
+    
+    if game.can_build_portal_at(defensePortal): #defense portal
+        locArr.append(defensePortal)
+    elif checkForPortal(game, defensePortal) == 'enemy':
+        if getVicinityPortalLocation(game, defensePortal) is not None:
+            locArr.append(getVicinityPortalLocation(game, defensePortal))
+
+    if game.can_build_portal_at(centerPortalLocation): #center portal
+        locArr.append(centerPortalLocation)
+    elif checkForPortal(game, centerPortalLocation) == 'enemy':
+        if getVicinityPortalLocation(game, centerPortalLocation) is not None:
+            locArr.append(getVicinityPortalLocation(game, centerPortalLocation))
+
+    if game.can_build_portal_at(attackPortal): #attack portal
+        locArr.append(attackPortal)
+    elif checkForPortal(game, attackPortal) == 'enemy':
+        if getVicinityPortalLocation(game, attackPortal) is not None:
+            locArr.append(getVicinityPortalLocation(game, attackPortal))
+
+    if len(locArr) == 0:
+            return []
+    return locArr
+    
+    
+getPathIsDangerous
+    loc = elf.location
+    for i in range(path/mvspeed +1)
+        loc = loc.towards(target, 300)
+        getIsDangerous(loc)
+        if getIsDangerous:
+            return true
+        
+if path is dangerous do not go.
+    
+'''
